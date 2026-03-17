@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajith Kumar — Senior Angular Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f5f2eb;
+    --accent: #e84c1e;
+    --accent2: #2a6ef5;
+    --muted: #7a7468;
+    --border: rgba(10,10,10,0.12);
+    --card: #fff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.2s, height 0.2s, border-color 0.2s;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 0.5rem 1.2rem;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 7rem 3rem 3rem;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 2rem; height: 1.5px;
+    background: var(--accent);
+    display: inline-block;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+  }
+  h1 .line2 { color: var(--accent); display: block; }
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+
+  .hero-right {
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .hero-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
+    border-radius: 5px;
+    z-index: -1;
+    opacity: 0.15;
+  }
+  .exp-badge {
+    display: inline-flex; align-items: baseline; gap: 0.3rem;
+    margin-bottom: 1.5rem;
+  }
+  .exp-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem; font-weight: 800;
+    line-height: 1; color: var(--accent);
+    letter-spacing: -0.04em;
+  }
+  .exp-txt { font-size: 0.9rem; color: var(--muted); }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.5rem; }
+  .stat-item { border-top: 1.5px solid var(--border); padding-top: 0.8rem; }
+  .stat-n {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem; font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  .stat-l { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+
+  /* BIG BG TEXT */
+  .bg-text {
+    position: absolute;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22vw;
+    line-height: 1;
+    color: var(--ink);
+    opacity: 0.03;
+    letter-spacing: -0.05em;
+    bottom: -2rem; right: -3rem;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* SECTION STYLES */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 0.7rem;
+    margin-bottom: 0.8rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 1.5rem; height: 1.5px;
+    background: var(--accent); display: inline-block;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 3rem;
+  }
+
+  /* SKILLS */
+  #skills { background: var(--ink); color: var(--paper); }
+  #skills .section-label { color: var(--accent); }
+  #skills .section-label::before { background: var(--accent); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .skill-group {
+    background: var(--ink);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+  .skill-group:hover { background: #141414; }
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 2px;
+    color: rgba(255,255,255,0.7);
+    transition: all 0.2s;
+  }
+  .skill-tag.hot {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232,76,30,0.08);
+  }
+
+  /* EXPERIENCE */
+  #experience { background: var(--paper); }
+  .exp-timeline { position: relative; }
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.6rem; bottom: 0;
+    width: 1.5px;
+    background: var(--border);
+  }
+  .exp-item {
+    padding-left: 2.5rem;
+    padding-bottom: 3.5rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .exp-item.visible { opacity: 1; transform: none; }
+  .exp-dot {
+    position: absolute; left: -6px; top: 0.55rem;
+    width: 13px; height: 13px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 2.5px solid var(--paper);
+  }
+  .exp-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  .exp-company {
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+  }
+  .exp-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .exp-highlights li {
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    font-size: 0.9rem; line-height: 1.65; color: var(--muted);
+  }
+  .exp-highlights li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+    font-family: 'DM Mono', monospace;
+  }
+  .modules-grid {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+  }
+  .module-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.6rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 2px;
+  }
+
+  /* PROJECTS */
+  #projects { background: #fff; }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .project-card {
+    background: #fff;
+    padding: 2rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card:hover { background: #fafaf7; }
+  .project-card:hover .project-arrow { transform: translate(4px, -4px); }
+  .project-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 1.2rem;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.7rem;
+  }
+  .project-desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+  .tech-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+  }
+  .project-arrow {
+    font-size: 1.2rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+
+  /* EDUCATION */
+  #education { background: var(--paper); }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; }
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .edu-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+  .edu-deg {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .edu-uni { color: var(--accent); font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .edu-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--ink); color: var(--paper);
+    text-align: center;
+  }
+  #contact h2 { color: var(--paper); }
+  .contact-subtitle {
+    font-size: 1.05rem; color: rgba(245,242,235,0.5);
+    max-width: 480px; margin: 0 auto 3rem;
+    font-weight: 300; line-height: 1.7;
+  }
+  .contact-links {
+    display: flex; gap: 1rem; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; color: var(--paper);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.85rem 1.5rem; border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(232,76,30,0.08); }
+
+  /* FOOTER */
+  footer {
+    background: #050505; color: rgba(255,255,255,0.25);
+    text-align: center; padding: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.08em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * {
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
+  .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
+  .hero-right {
+    animation: fadeUp 0.8s 0.4s ease forwards;
+    opacity: 0;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 1.5rem; }
+    h1 { font-size: 3rem; }
+    .edu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AK<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:ajithsasishankar@gmail.com" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="bg-text">AK</div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Available for opportunities</div>
+    <h1>Ajith<br><span class="line2">Kumar</span></h1>
+    <p class="hero-desc">
+      Senior Angular Developer specializing in large-scale fintech platforms. 4+ years building payment gateways, merchant systems, and UPI transaction infrastructure.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:ajithsasishankar@gmail.com" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Get In Touch
+      </a>
+      <a href="#experience" class="btn-secondary">
+        View Work
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="exp-badge">
+        <span class="exp-num">4+</span>
+        <span class="exp-txt">years of<br>experience</span>
+      </div>
+      <div style="font-size:0.9rem; color:var(--muted); line-height:1.6; border-top:1px solid var(--border); padding-top:1.2rem;">
+        Building enterprise fintech applications at <strong style="color:var(--ink);">Credopay Pvt Ltd</strong> — serving multiple banking clients across India.
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-n">8+</div>
+          <div class="stat-l">Core Modules<br>Built</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-n">Angular 17</div>
+          <div class="stat-l">Latest Version<br>Expertise</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-n">RxJS</div>
+          <div class="stat-l">Advanced<br>Reactive Prog.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-n">NgRx</div>
+          <div class="stat-l">State Mgmt<br>Architecture</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Expertise</div>
+  <h2 style="color:var(--paper);">What I work<br>with every day</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Frontend Core</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">Angular 17</span>
+        <span class="skill-tag hot">Angular 16</span>
+        <span class="skill-tag hot">TypeScript</span>
+        <span class="skill-tag">JavaScript ES6+</span>
+        <span class="skill-tag hot">Angular Signals</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Reactive &amp; State</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">RxJS</span>
+        <span class="skill-tag hot">NgRx</span>
+        <span class="skill-tag">Observables</span>
+        <span class="skill-tag">BehaviorSubjects</span>
+        <span class="skill-tag">Effects</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">UI &amp; Styling</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">Angular Material</span>
+        <span class="skill-tag">PrimeNG</span>
+        <span class="skill-tag">Tailwind CSS</span>
+        <span class="skill-tag">Bootstrap</span>
+        <span class="skill-tag">SCSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Architecture</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">Lazy Loading</span>
+        <span class="skill-tag hot">Modular Architecture</span>
+        <span class="skill-tag">HTTP Interceptors</span>
+        <span class="skill-tag">RBAC</span>
+        <span class="skill-tag">White-label</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Visualization</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">Chart.js</span>
+        <span class="skill-tag">Leaflet.js</span>
+        <span class="skill-tag">Analytics Dashboards</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools &amp; Integration</div>
+      <div class="skill-tags">
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">Git / GitHub</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Chrome DevTools</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work History</div>
+  <h2>Where I've<br>made impact</h2>
+
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-meta">April 2022 — Present</div>
+      <div class="exp-title">Frontend Developer</div>
+      <div class="exp-company">Credopay Pvt Ltd · Chennai</div>
+      <ul class="exp-highlights">
+        <li>Built a large-scale Angular fintech platform managing merchants, terminals, UPI transactions, payment gateway operations, and multi-bank settlements.</li>
+        <li>Designed modular enterprise architecture using lazy-loaded feature modules with reusable component libraries and shared services.</li>
+        <li>Implemented role-based access control (RBAC) for secure module access across multiple user roles.</li>
+        <li>Developed analytics dashboards and real-time transaction monitoring systems using Chart.js.</li>
+        <li>Delivered multilingual support and white-label architecture deployed across multiple banking clients.</li>
+        <li>Optimized performance via lazy loading, change detection tuning, and RxJS operators like debounceTime and switchMap.</li>
+      </ul>
+
+      <div style="margin-top:1.5rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;">Modules Built</div>
+        <div class="modules-grid">
+          <span class="module-badge">Payment Gateway</span>
+          <span class="module-badge">Merchant Management</span>
+          <span class="module-badge">Bank Onboarding</span>
+          <span class="module-badge">TMS</span>
+          <span class="module-badge">Aggregator Mgmt</span>
+          <span class="module-badge">Settlements</span>
+          <span class="module-badge">Reports</span>
+          <span class="module-badge">Help Desk</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Featured Work</div>
+  <h2>Projects I've<br>engineered</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-num">01 / Fintech</div>
+      <div class="project-title">Payment Gateway Manager</div>
+      <p class="project-desc">Full-stack Angular module managing multi-bank payment gateway operations, transaction routing, and real-time monitoring across banking partners.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Angular 17</span>
+        <span class="tech-pill">NgRx</span>
+        <span class="tech-pill">RxJS</span>
+        <span class="tech-pill">REST API</span>
+        <span class="tech-pill">Chart.js</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">02 / Fintech</div>
+      <div class="project-title">Merchant Onboarding System</div>
+      <p class="project-desc">End-to-end merchant and aggregator management platform with RBAC, document workflows, and multi-step onboarding across multiple banking clients.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Angular Material</span>
+        <span class="tech-pill">TypeScript</span>
+        <span class="tech-pill">HTTP Interceptors</span>
+        <span class="tech-pill">RBAC</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">03 / Fintech</div>
+      <div class="project-title">UPI Transaction Monitor</div>
+      <p class="project-desc">Real-time UPI transaction monitoring dashboard with analytics, settlement reconciliation, and reporting across high-volume transaction flows.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Angular Signals</span>
+        <span class="tech-pill">Chart.js</span>
+        <span class="tech-pill">RxJS</span>
+        <span class="tech-pill">SCSS</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">04 / Architecture</div>
+      <div class="project-title">White-label Multi-bank Platform</div>
+      <p class="project-desc">Configurable white-label Angular architecture supporting multilingual UI and custom theming deployed across multiple banking institutions.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Lazy Modules</span>
+        <span class="tech-pill">i18n</span>
+        <span class="tech-pill">Angular 16</span>
+        <span class="tech-pill">Bootstrap</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">05 / Optimization</div>
+      <div class="project-title">Terminal Management System</div>
+      <p class="project-desc">TMS module for managing payment terminals at scale — device provisioning, status monitoring, and lifecycle management across merchant networks.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Angular</span>
+        <span class="tech-pill">PrimeNG</span>
+        <span class="tech-pill">REST API</span>
+        <span class="tech-pill">NgRx</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card">
+      <div class="project-num">06 / Dashboard</div>
+      <div class="project-title">Analytics &amp; Settlement Reports</div>
+      <p class="project-desc">High-performance reporting and analytics module handling large datasets with optimized change detection, virtual scrolling, and Chart.js visualizations.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Chart.js</span>
+        <span class="tech-pill">Leaflet.js</span>
+        <span class="tech-pill">RxJS</span>
+        <span class="tech-pill">Tailwind CSS</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Education</div>
+  <h2>Academic<br>background</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">2022 — 2024</div>
+      <div class="edu-deg">Master of Computer Applications</div>
+      <div class="edu-uni">Jain University, Bangalore</div>
+      <div class="edu-year">MCA</div>
+    </div>
+    <div class="edu-card">
+      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">2016 — 2019</div>
+      <div class="edu-deg">Bachelor of Computer Applications</div>
+      <div class="edu-uni">Bharath University of Arts and Science</div>
+      <div class="edu-year">BCA</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" style="justify-content:center;">Let's Connect</div>
+  <h2>Ready to build<br>something great?</h2>
+  <p class="contact-subtitle">Open to senior Angular developer roles, fintech opportunities, and interesting frontend challenges. Based in Chennai — open to hybrid and remote.</p>
+  <div class="contact-links">
+    <a href="mailto:ajithsasishankar@gmail.com" class="contact-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+      ajithsasishankar@gmail.com
+    </a>
+    <a href="tel:+918838516518" class="contact-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6.55 6.55l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +91 88385 16518
+    </a>
+    <a href="#" class="contact-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Chrompet, Chennai
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>Ajith Kumar · Senior Angular Developer · Chennai, India · Built with care</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+  function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); }
+  animRing();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='50px'; ring.style.height='50px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.exp-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
