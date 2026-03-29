@@ -3,835 +3,1684 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ajith Kumar — Senior Angular Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<title>AngularEdge — Senior Dev Interview Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0a0a0a;
-    --paper: #f5f2eb;
-    --accent: #e84c1e;
-    --accent2: #2a6ef5;
-    --muted: #7a7468;
-    --border: rgba(10,10,10,0.12);
-    --card: #fff;
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --surface3: #22222e;
+    --border: #2a2a38;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --accent4: #f7971e;
+    --text: #e8e8f0;
+    --text-muted: #888899;
+    --text-dim: #555566;
+    --tag-bg: #1e1e2e;
+    --radius: 10px;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* CUSTOM CURSOR */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
-    mix-blend-mode: multiply;
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1.5px solid var(--accent);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.18s ease, width 0.2s, height 0.2s, border-color 0.2s;
-    opacity: 0.5;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.4rem 3rem;
-    background: var(--paper);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(8px);
-  }
-  .nav-logo {
     font-family: 'Syne', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-  .nav-logo span { color: var(--accent); }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--muted);
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-cta {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--paper);
-    background: var(--ink);
-    padding: 0.5rem 1.2rem;
-    border-radius: 2px;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
-
-  /* HERO */
-  #hero {
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 7rem 3rem 3rem;
-    gap: 3rem;
-    position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
   }
-  .hero-left {
-    display: flex; flex-direction: column; justify-content: center;
-    position: relative; z-index: 2;
-  }
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    display: flex; align-items: center; gap: 0.7rem;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 2rem; height: 1.5px;
-    background: var(--accent);
-    display: inline-block;
-  }
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(3.5rem, 7vw, 6.5rem);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    margin-bottom: 2rem;
-  }
-  h1 .line2 { color: var(--accent); display: block; }
-  .hero-desc {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--muted);
-    max-width: 480px;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-  }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.85rem 1.8rem;
-    border-radius: 2px;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    border: 1.5px solid var(--ink);
-    color: var(--ink);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.85rem 1.8rem;
-    border-radius: 2px;
-    transition: all 0.2s;
-  }
-  .btn-secondary:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
 
-  .hero-right {
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-  }
-  .hero-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-  }
-  .hero-card::before {
+  /* GRID BG */
+  body::before {
     content: '';
-    position: absolute;
-    top: -2px; left: -2px; right: -2px; bottom: -2px;
-    background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
-    border-radius: 5px;
-    z-index: -1;
-    opacity: 0.15;
-  }
-  .exp-badge {
-    display: inline-flex; align-items: baseline; gap: 0.3rem;
-    margin-bottom: 1.5rem;
-  }
-  .exp-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 4rem; font-weight: 800;
-    line-height: 1; color: var(--accent);
-    letter-spacing: -0.04em;
-  }
-  .exp-txt { font-size: 0.9rem; color: var(--muted); }
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.5rem; }
-  .stat-item { border-top: 1.5px solid var(--border); padding-top: 0.8rem; }
-  .stat-n {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.8rem; font-weight: 700;
-    letter-spacing: -0.03em;
-  }
-  .stat-l { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
-
-  /* BIG BG TEXT */
-  .bg-text {
-    position: absolute;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 22vw;
-    line-height: 1;
-    color: var(--ink);
-    opacity: 0.03;
-    letter-spacing: -0.05em;
-    bottom: -2rem; right: -3rem;
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(108,99,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108,99,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
     pointer-events: none;
-    user-select: none;
     z-index: 0;
   }
 
-  /* SECTION STYLES */
-  section { padding: 6rem 3rem; }
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: flex; align-items: center; gap: 0.7rem;
-    margin-bottom: 0.8rem;
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: transform 0.3s ease;
   }
-  .section-label::before {
-    content: '';
-    width: 1.5rem; height: 1.5px;
-    background: var(--accent); display: inline-block;
+
+  .logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
   }
-  h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
+  .logo-mark {
+    font-size: 22px;
     font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    margin-bottom: 3rem;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-
-  /* SKILLS */
-  #skills { background: var(--ink); color: var(--paper); }
-  #skills .section-label { color: var(--accent); }
-  #skills .section-label::before { background: var(--accent); }
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5px;
-    background: rgba(255,255,255,0.08);
-    border: 1.5px solid rgba(255,255,255,0.08);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .skill-group {
-    background: var(--ink);
-    padding: 2rem;
-    transition: background 0.2s;
-  }
-  .skill-group:hover { background: #141414; }
-  .skill-group-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
+  .logo-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.2rem;
-  }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .skill-tag {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.7rem;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 2px;
-    color: rgba(255,255,255,0.7);
-    transition: all 0.2s;
-  }
-  .skill-tag.hot {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(232,76,30,0.08);
   }
 
-  /* EXPERIENCE */
-  #experience { background: var(--paper); }
-  .exp-timeline { position: relative; }
-  .exp-timeline::before {
+  .nav-section {
+    padding: 16px 12px 8px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  .nav-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0 12px;
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active {
+    background: rgba(108,99,255,0.12);
+    color: var(--accent);
+  }
+  .nav-item.active::before {
     content: '';
     position: absolute;
-    left: 0; top: 0.6rem; bottom: 0;
-    width: 1.5px;
-    background: var(--border);
-  }
-  .exp-item {
-    padding-left: 2.5rem;
-    padding-bottom: 3.5rem;
-    position: relative;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .exp-item.visible { opacity: 1; transform: none; }
-  .exp-dot {
-    position: absolute; left: -6px; top: 0.55rem;
-    width: 13px; height: 13px;
+    left: 0; top: 20%; bottom: 20%;
+    width: 3px;
     background: var(--accent);
-    border-radius: 50%;
-    border: 2.5px solid var(--paper);
+    border-radius: 0 2px 2px 0;
   }
-  .exp-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.4rem;
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .nav-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface3);
+    color: var(--text-dim);
+    padding: 2px 7px;
+    border-radius: 20px;
   }
-  .exp-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.3rem;
-  }
-  .exp-company {
-    font-size: 0.9rem;
-    color: var(--accent);
-    margin-bottom: 1.2rem;
-    font-weight: 500;
-  }
-  .exp-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-  .exp-highlights li {
-    display: flex; align-items: flex-start; gap: 0.7rem;
-    font-size: 0.9rem; line-height: 1.65; color: var(--muted);
-  }
-  .exp-highlights li::before {
-    content: '→';
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-top: 0.05rem;
-    font-family: 'DM Mono', monospace;
-  }
-  .modules-grid {
-    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
-  }
-  .module-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.05em;
-    padding: 0.3rem 0.6rem;
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 2px;
+  .nav-badge.hot {
+    background: rgba(255,101,132,0.15);
+    color: var(--accent2);
   }
 
-  /* PROJECTS */
-  #projects { background: #fff; }
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5px;
-    background: var(--border);
-    border: 1px solid var(--border);
+  .sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .progress-ring-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-label { font-size: 12px; color: var(--text-muted); }
+  .progress-pct { font-size: 20px; font-weight: 800; color: var(--accent3); }
+  .progress-bar {
+    height: 4px;
+    background: var(--surface3);
     border-radius: 4px;
+    margin-top: 6px;
     overflow: hidden;
   }
-  .project-card {
-    background: #fff;
-    padding: 2rem;
-    transition: background 0.2s;
+  .progress-fill {
+    height: 100%;
+    width: 34%;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    border-radius: 4px;
+  }
+
+  /* MAIN */
+  .main {
+    margin-left: 260px;
+    padding: 40px 48px;
     position: relative;
-    overflow: hidden;
+    z-index: 1;
+    min-height: 100vh;
   }
-  .project-card:hover { background: #fafaf7; }
-  .project-card:hover .project-arrow { transform: translate(4px, -4px); }
-  .project-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    margin-bottom: 1.2rem;
+
+  /* PAGE HEADER */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 36px;
   }
-  .project-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.7rem;
-  }
-  .project-desc {
-    font-size: 0.875rem;
-    line-height: 1.7;
-    color: var(--muted);
-    margin-bottom: 1.5rem;
-  }
-  .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
-  .tech-pill {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-    padding: 0.2rem 0.5rem;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    color: var(--muted);
-  }
-  .project-arrow {
-    font-size: 1.2rem;
+  .page-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
     color: var(--accent);
-    transition: transform 0.2s;
-    display: inline-block;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
   }
+  .page-title {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .page-title span { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+  .page-sub { color: var(--text-muted); font-size: 14px; margin-top: 8px; font-weight: 400; }
 
-  /* EDUCATION */
-  #education { background: var(--paper); }
-  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; }
-  .edu-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .edu-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
-  .edu-deg {
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
     font-family: 'Syne', sans-serif;
-    font-size: 1.2rem; font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.4rem;
-  }
-  .edu-uni { color: var(--accent); font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
-  .edu-year {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--muted);
-  }
-
-  /* CONTACT */
-  #contact {
-    background: var(--ink); color: var(--paper);
-    text-align: center;
-  }
-  #contact h2 { color: var(--paper); }
-  .contact-subtitle {
-    font-size: 1.05rem; color: rgba(245,242,235,0.5);
-    max-width: 480px; margin: 0 auto 3rem;
-    font-weight: 300; line-height: 1.7;
-  }
-  .contact-links {
-    display: flex; gap: 1rem; justify-content: center;
-    flex-wrap: wrap;
-  }
-  .contact-link {
-    display: flex; align-items: center; gap: 0.6rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
-    text-decoration: none; color: var(--paper);
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 0.85rem 1.5rem; border-radius: 2px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
     transition: all 0.2s;
   }
-  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(232,76,30,0.08); }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #7c74ff; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* FOOTER */
-  footer {
-    background: #050505; color: rgba(255,255,255,0.25);
-    text-align: center; padding: 2rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.08em;
+  /* STAT CARDS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    filter: blur(30px);
+    opacity: 0.15;
+  }
+  .stat-card.c1::after { background: var(--accent); }
+  .stat-card.c2::after { background: var(--accent2); }
+  .stat-card.c3::after { background: var(--accent3); }
+  .stat-card.c4::after { background: var(--accent4); }
+
+  .stat-icon { font-size: 22px; margin-bottom: 12px; }
+  .stat-val { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; font-weight: 400; }
+  .stat-change {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    color: var(--accent3);
   }
 
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* SECTION GRID */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
   }
-  .hero-left > * {
-    animation: fadeUp 0.8s ease forwards;
-    opacity: 0;
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
   }
-  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
-  .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
-  .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
-  .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
-  .hero-right {
-    animation: fadeUp 0.8s 0.4s ease forwards;
-    opacity: 0;
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-body { padding: 20px; }
+
+  /* ROADMAP PHASES */
+  .phases-list { display: flex; flex-direction: column; gap: 10px; }
+  .phase-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 8px;
+    background: var(--surface2);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .phase-item:hover { border-color: var(--accent); }
+  .phase-item.done { opacity: 0.6; }
+  .phase-num {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .phase-num.done { background: rgba(67,233,123,0.15); color: var(--accent3); }
+  .phase-num.active { background: rgba(108,99,255,0.2); color: var(--accent); }
+  .phase-num.todo { background: var(--surface3); color: var(--text-dim); }
+  .phase-info { flex: 1; }
+  .phase-name { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .phase-desc { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+  .phase-status {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 20px;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  .phase-status.done { background: rgba(67,233,123,0.1); color: var(--accent3); }
+  .phase-status.active { background: rgba(108,99,255,0.1); color: var(--accent); }
+  .phase-status.todo { background: var(--surface3); color: var(--text-dim); }
+
+  /* CONCEPT QUICK-REF */
+  .concepts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .concept-chip {
+    padding: 12px 14px;
+    background: var(--surface2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .concept-chip:hover { border-color: var(--accent); }
+  .concept-name { font-size: 12px; font-weight: 700; }
+  .concept-tag {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .tag-rxjs { background: rgba(247,151,30,0.12); color: var(--accent4); }
+  .tag-ngrx { background: rgba(255,101,132,0.12); color: var(--accent2); }
+  .tag-perf { background: rgba(67,233,123,0.12); color: var(--accent3); }
+  .tag-core { background: rgba(108,99,255,0.12); color: var(--accent); }
+
+  /* INTERVIEW Q&A */
+  .qa-list { display: flex; flex-direction: column; gap: 8px; }
+  .qa-item {
+    padding: 14px 16px;
+    background: var(--surface2);
+    border-radius: 8px;
+    border-left: 3px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .qa-item:hover { border-left-color: var(--accent); }
+  .qa-item.open { border-left-color: var(--accent); }
+  .qa-q {
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .qa-chevron { flex-shrink: 0; color: var(--text-dim); font-size: 12px; transition: transform 0.2s; }
+  .qa-item.open .qa-chevron { transform: rotate(180deg); color: var(--accent); }
+  .qa-a {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 10px;
+    font-weight: 400;
+    display: none;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .qa-item.open .qa-a { display: block; }
+  .qa-code {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    margin-top: 8px;
+    line-height: 1.6;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* 30-DAY CALENDAR */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+  }
+  .day-cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+  }
+  .day-cell.done { background: rgba(67,233,123,0.15); color: var(--accent3); }
+  .day-cell.active { background: rgba(108,99,255,0.2); color: var(--accent); border-color: var(--accent); animation: pulse 2s infinite; }
+  .day-cell.todo { background: var(--surface2); color: var(--text-dim); }
+  .day-cell:hover { border-color: var(--accent); color: var(--text); }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(108,99,255,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(108,99,255,0); }
+  }
+
+  /* MOCK INTERVIEW */
+  .interview-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+  .chat-bubble {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .chat-bubble.interviewer {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    align-self: flex-start;
+    border-top-left-radius: 2px;
+  }
+  .chat-bubble.user {
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.3);
+    color: var(--accent);
+    align-self: flex-end;
+    border-top-right-radius: 2px;
+    font-weight: 600;
+  }
+  .chat-name {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .chat-input-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-input::placeholder { color: var(--text-dim); }
+
+  /* FOLDER STRUCTURE */
+  .tree { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2; }
+  .tree-line { display: flex; align-items: center; gap: 4px; }
+  .tree-indent { padding-left: 20px; }
+  .tree-folder { color: var(--accent4); }
+  .tree-file { color: var(--text-muted); }
+  .tree-comment { color: var(--text-dim); font-style: italic; font-size: 11px; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+  .tab {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: rgba(108,99,255,0.12); color: var(--accent); border-color: rgba(108,99,255,0.3); }
+
+  /* PAGE SECTIONS (shown/hidden) */
+  .page-section { display: none; }
+  .page-section.visible { display: block; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .content-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .main { margin-left: 0; padding: 24px 20px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .page-title { font-size: 24px; }
   }
 
   /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--paper); }
-  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-  @media (max-width: 768px) {
-    nav { padding: 1.2rem 1.5rem; }
-    .nav-links { display: none; }
-    #hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
-    .hero-right { display: none; }
-    section { padding: 4rem 1.5rem; }
-    h1 { font-size: 3rem; }
-    .edu-grid { grid-template-columns: 1fr; }
+  /* HIGHLIGHT CHIPS */
+  .chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
   }
+  .chip-angular { background: rgba(255,101,132,0.1); color: var(--accent2); }
+  .chip-rxjs { background: rgba(247,151,30,0.1); color: var(--accent4); }
+  .chip-perf { background: rgba(67,233,123,0.1); color: var(--accent3); }
+
+  .full-width { grid-column: 1 / -1; }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">AK<span>.</span></div>
-  <ul class="nav-links">
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="mailto:ajithsasishankar@gmail.com" class="nav-cta">Hire Me</a>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="bg-text">AK</div>
-  <div class="hero-left">
-    <div class="hero-eyebrow">Available for opportunities</div>
-    <h1>Ajith<br><span class="line2">Kumar</span></h1>
-    <p class="hero-desc">
-      Senior Angular Developer specializing in large-scale fintech platforms. 4+ years building payment gateways, merchant systems, and UPI transaction infrastructure.
-    </p>
-    <div class="hero-actions">
-      <a href="mailto:ajithsasishankar@gmail.com" class="btn-primary">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-        Get In Touch
-      </a>
-      <a href="#experience" class="btn-secondary">
-        View Work
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">AngularEdge</div>
+    <div class="logo-sub">12–15 LPA Interview Prep</div>
   </div>
+  <nav class="nav-section">
+    <div class="nav-label">Overview</div>
+    <div class="nav-item active" onclick="showPage('dashboard')">
+      <span class="nav-icon">⬡</span> Dashboard
+    </div>
+    <div class="nav-label">Build</div>
+    <div class="nav-item" onclick="showPage('project')">
+      <span class="nav-icon">⬢</span> Project Idea
+    </div>
+    <div class="nav-item" onclick="showPage('architecture')">
+      <span class="nav-icon">◈</span> Architecture
+    </div>
+    <div class="nav-item" onclick="showPage('roadmap')">
+      <span class="nav-icon">◎</span> 30-Day Roadmap
+    </div>
+    <div class="nav-label">Master</div>
+    <div class="nav-item" onclick="showPage('concepts')">
+      <span class="nav-icon">⟐</span> Angular Concepts
+      <span class="nav-badge hot">HOT</span>
+    </div>
+    <div class="nav-item" onclick="showPage('js')">
+      <span class="nav-icon">◊</span> JavaScript Core
+    </div>
+    <div class="nav-item" onclick="showPage('perf')">
+      <span class="nav-icon">◉</span> Performance
+    </div>
+    <div class="nav-label">Interview</div>
+    <div class="nav-item" onclick="showPage('questions')">
+      <span class="nav-icon">?</span> Top 50 Questions
+    </div>
+    <div class="nav-item" onclick="showPage('mock')">
+      <span class="nav-icon">▷</span> Mock Interview
+      <span class="nav-badge">Live</span>
+    </div>
+    <div class="nav-item" onclick="showPage('hr')">
+      <span class="nav-icon">◌</span> HR Prep
+    </div>
+    <div class="nav-item" onclick="showPage('system')">
+      <span class="nav-icon">⊞</span> System Design
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="progress-label">Overall Readiness</div>
+    <div class="progress-pct">34%</div>
+    <div class="progress-bar"><div class="progress-fill"></div></div>
+  </div>
+</aside>
 
-  <div class="hero-right">
-    <div class="hero-card">
-      <div class="exp-badge">
-        <span class="exp-num">4+</span>
-        <span class="exp-txt">years of<br>experience</span>
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ═══════════════════ DASHBOARD ═══════════════════ -->
+  <div id="page-dashboard" class="page-section visible">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Welcome back</div>
+        <h1 class="page-title">Your Interview <span>Command Centre</span></h1>
+        <p class="page-sub">Angular 16/17 · RxJS · NgRx · Fintech SaaS · Target: 12–15 LPA</p>
       </div>
-      <div style="font-size:0.9rem; color:var(--muted); line-height:1.6; border-top:1px solid var(--border); padding-top:1.2rem;">
-        Building enterprise fintech applications at <strong style="color:var(--ink);">Credopay Pvt Ltd</strong> — serving multiple banking clients across India.
+      <div class="header-actions">
+        <button class="btn btn-ghost" onclick="showPage('mock')">▷ Start Mock</button>
+        <button class="btn btn-primary" onclick="showPage('roadmap')">View Roadmap</button>
       </div>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-n">8+</div>
-          <div class="stat-l">Core Modules<br>Built</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card c1">
+        <div class="stat-icon">⬡</div>
+        <div class="stat-val">7</div>
+        <div class="stat-label">Build Phases</div>
+        <div class="stat-change">▸ Phase 2 active</div>
+      </div>
+      <div class="stat-card c2">
+        <div class="stat-icon">?</div>
+        <div class="stat-val">50</div>
+        <div class="stat-label">Interview Questions</div>
+        <div class="stat-change">▸ 30 Angular + 20 JS</div>
+      </div>
+      <div class="stat-card c3">
+        <div class="stat-icon">◎</div>
+        <div class="stat-val">30</div>
+        <div class="stat-label">Days Planned</div>
+        <div class="stat-change">▸ Day 10 today</div>
+      </div>
+      <div class="stat-card c4">
+        <div class="stat-icon">⟐</div>
+        <div class="stat-val">14</div>
+        <div class="stat-label">Core Concepts</div>
+        <div class="stat-change">▸ 6 mastered</div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- Phases -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⬢ Build Roadmap Phases</div>
+          <button class="btn btn-ghost" style="padding:6px 12px;font-size:11px" onclick="showPage('roadmap')">See all</button>
         </div>
-        <div class="stat-item">
-          <div class="stat-n">Angular 17</div>
-          <div class="stat-l">Latest Version<br>Expertise</div>
+        <div class="card-body">
+          <div class="phases-list">
+            <div class="phase-item done">
+              <div class="phase-num done">P1</div>
+              <div class="phase-info">
+                <div class="phase-name">Project Setup (Angular 17)</div>
+                <div class="phase-desc">Standalone APIs · ESBuild · SSR config · Aliases</div>
+              </div>
+              <div class="phase-status done">done</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-num active">P2</div>
+              <div class="phase-info">
+                <div class="phase-name">Layout + Routing</div>
+                <div class="phase-desc">Shell layout · Lazy routes · Guards · Auth flow</div>
+              </div>
+              <div class="phase-status active">in progress</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-num todo">P3</div>
+              <div class="phase-info">
+                <div class="phase-name">Feature Modules</div>
+                <div class="phase-desc">Merchant · Reports · Users · Smart/Dumb split</div>
+              </div>
+              <div class="phase-status todo">todo</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-num todo">P4</div>
+              <div class="phase-info">
+                <div class="phase-name">RBAC (UI Level)</div>
+                <div class="phase-desc">Directive-based · Route guard · Permission service</div>
+              </div>
+              <div class="phase-status todo">todo</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-num todo">P5</div>
+              <div class="phase-info">
+                <div class="phase-name">Dashboard + Charts</div>
+                <div class="phase-desc">Chart.js · KPI cards · Large table · Virtual scroll</div>
+              </div>
+              <div class="phase-status todo">todo</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-num todo">P6</div>
+              <div class="phase-info">
+                <div class="phase-name">NgRx State Management</div>
+                <div class="phase-desc">Store · Actions · Reducers · Effects · Selectors</div>
+              </div>
+              <div class="phase-status todo">todo</div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-num todo">P7</div>
+              <div class="phase-info">
+                <div class="phase-name">Performance Optimization</div>
+                <div class="phase-desc">OnPush · trackBy · takeUntil · Lazy modules</div>
+              </div>
+              <div class="phase-status todo">todo</div>
+            </div>
+          </div>
         </div>
-        <div class="stat-item">
-          <div class="stat-n">RxJS</div>
-          <div class="stat-l">Advanced<br>Reactive Prog.</div>
+      </div>
+
+      <!-- Quick Concepts -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⟐ Key Concepts</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-n">NgRx</div>
-          <div class="stat-l">State Mgmt<br>Architecture</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-label">Technical Expertise</div>
-  <h2 style="color:var(--paper);">What I work<br>with every day</h2>
-  <div class="skills-grid">
-    <div class="skill-group">
-      <div class="skill-group-title">Frontend Core</div>
-      <div class="skill-tags">
-        <span class="skill-tag hot">Angular 17</span>
-        <span class="skill-tag hot">Angular 16</span>
-        <span class="skill-tag hot">TypeScript</span>
-        <span class="skill-tag">JavaScript ES6+</span>
-        <span class="skill-tag hot">Angular Signals</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Reactive &amp; State</div>
-      <div class="skill-tags">
-        <span class="skill-tag hot">RxJS</span>
-        <span class="skill-tag hot">NgRx</span>
-        <span class="skill-tag">Observables</span>
-        <span class="skill-tag">BehaviorSubjects</span>
-        <span class="skill-tag">Effects</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">UI &amp; Styling</div>
-      <div class="skill-tags">
-        <span class="skill-tag hot">Angular Material</span>
-        <span class="skill-tag">PrimeNG</span>
-        <span class="skill-tag">Tailwind CSS</span>
-        <span class="skill-tag">Bootstrap</span>
-        <span class="skill-tag">SCSS</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Architecture</div>
-      <div class="skill-tags">
-        <span class="skill-tag hot">Lazy Loading</span>
-        <span class="skill-tag hot">Modular Architecture</span>
-        <span class="skill-tag">HTTP Interceptors</span>
-        <span class="skill-tag">RBAC</span>
-        <span class="skill-tag">White-label</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Visualization</div>
-      <div class="skill-tags">
-        <span class="skill-tag hot">Chart.js</span>
-        <span class="skill-tag">Leaflet.js</span>
-        <span class="skill-tag">Analytics Dashboards</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Tools &amp; Integration</div>
-      <div class="skill-tags">
-        <span class="skill-tag">REST APIs</span>
-        <span class="skill-tag">Git / GitHub</span>
-        <span class="skill-tag">VS Code</span>
-        <span class="skill-tag">Chrome DevTools</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-label">Work History</div>
-  <h2>Where I've<br>made impact</h2>
-
-  <div class="exp-timeline">
-    <div class="exp-item">
-      <div class="exp-dot"></div>
-      <div class="exp-meta">April 2022 — Present</div>
-      <div class="exp-title">Frontend Developer</div>
-      <div class="exp-company">Credopay Pvt Ltd · Chennai</div>
-      <ul class="exp-highlights">
-        <li>Built a large-scale Angular fintech platform managing merchants, terminals, UPI transactions, payment gateway operations, and multi-bank settlements.</li>
-        <li>Designed modular enterprise architecture using lazy-loaded feature modules with reusable component libraries and shared services.</li>
-        <li>Implemented role-based access control (RBAC) for secure module access across multiple user roles.</li>
-        <li>Developed analytics dashboards and real-time transaction monitoring systems using Chart.js.</li>
-        <li>Delivered multilingual support and white-label architecture deployed across multiple banking clients.</li>
-        <li>Optimized performance via lazy loading, change detection tuning, and RxJS operators like debounceTime and switchMap.</li>
-      </ul>
-
-      <div style="margin-top:1.5rem;">
-        <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;">Modules Built</div>
-        <div class="modules-grid">
-          <span class="module-badge">Payment Gateway</span>
-          <span class="module-badge">Merchant Management</span>
-          <span class="module-badge">Bank Onboarding</span>
-          <span class="module-badge">TMS</span>
-          <span class="module-badge">Aggregator Mgmt</span>
-          <span class="module-badge">Settlements</span>
-          <span class="module-badge">Reports</span>
-          <span class="module-badge">Help Desk</span>
+        <div class="card-body">
+          <div class="concepts-grid">
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">switchMap</span>
+              <span class="concept-tag tag-rxjs">RxJS</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">OnPush</span>
+              <span class="concept-tag tag-perf">Perf</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">NgRx Store</span>
+              <span class="concept-tag tag-ngrx">NgRx</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">Signals</span>
+              <span class="concept-tag tag-core">Core</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">Effects</span>
+              <span class="concept-tag tag-ngrx">NgRx</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">trackBy</span>
+              <span class="concept-tag tag-perf">Perf</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">mergeMap</span>
+              <span class="concept-tag tag-rxjs">RxJS</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('concepts')">
+              <span class="concept-name">Guards</span>
+              <span class="concept-tag tag-core">Core</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('js')">
+              <span class="concept-name">Event Loop</span>
+              <span class="concept-tag tag-core">JS</span>
+            </div>
+            <div class="concept-chip" onclick="showPage('js')">
+              <span class="concept-name">Closures</span>
+              <span class="concept-tag tag-core">JS</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label">Featured Work</div>
-  <h2>Projects I've<br>engineered</h2>
-  <div class="projects-grid">
-    <div class="project-card">
-      <div class="project-num">01 / Fintech</div>
-      <div class="project-title">Payment Gateway Manager</div>
-      <p class="project-desc">Full-stack Angular module managing multi-bank payment gateway operations, transaction routing, and real-time monitoring across banking partners.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Angular 17</span>
-        <span class="tech-pill">NgRx</span>
-        <span class="tech-pill">RxJS</span>
-        <span class="tech-pill">REST API</span>
-        <span class="tech-pill">Chart.js</span>
+    <!-- Top 3 Questions Preview -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">? Frequently Asked — Quick Prep</div>
+        <button class="btn btn-ghost" style="padding:6px 12px;font-size:11px" onclick="showPage('questions')">All 50 →</button>
       </div>
-      <span class="project-arrow">↗</span>
-    </div>
-    <div class="project-card">
-      <div class="project-num">02 / Fintech</div>
-      <div class="project-title">Merchant Onboarding System</div>
-      <p class="project-desc">End-to-end merchant and aggregator management platform with RBAC, document workflows, and multi-step onboarding across multiple banking clients.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Angular Material</span>
-        <span class="tech-pill">TypeScript</span>
-        <span class="tech-pill">HTTP Interceptors</span>
-        <span class="tech-pill">RBAC</span>
+      <div class="card-body">
+        <div class="qa-list">
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">What is Change Detection and how does OnPush work? <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">Angular's change detection checks if the UI is in sync with component data. By default it checks every component on every event. <strong>OnPush</strong> tells Angular to only re-render a component when: (1) an @Input reference changes, (2) an event inside the component fires, or (3) an Observable emits and you use async pipe. This dramatically reduces checks in large apps.
+              <div class="qa-code">@Component({ changeDetection: ChangeDetectionStrategy.OnPush })
+// Now Angular skips this tree unless input ref changes or markForCheck() is called</div>
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">Difference between switchMap, mergeMap, concatMap? <span class="qa-chevron">▼</span></div>
+            <div class="qa-a"><strong>switchMap</strong>: cancels the previous inner observable when a new value comes — perfect for search/typeahead.<br><strong>mergeMap</strong>: subscribes to all inner observables simultaneously — good for parallel HTTP calls.<br><strong>concatMap</strong>: queues and processes one at a time — good for ordered operations.
+              <div class="qa-code">// Search: use switchMap (cancel stale requests)
+this.search$.pipe(
+  debounceTime(300),
+  switchMap(term => this.api.search(term))
+)</div>
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">How do you prevent memory leaks in Angular? <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">Use <strong>takeUntil</strong> with a destroy$ Subject, or the new <strong>takeUntilDestroyed()</strong> in Angular 16+. Always unsubscribe from Observables that don't complete automatically (Router events, fromEvent, interval, BehaviorSubject).
+              <div class="qa-code">private destroy$ = new Subject&lt;void&gt;();
+ngOnInit() {
+  this.data$.pipe(takeUntil(this.destroy$)).subscribe();
+}
+ngOnDestroy() { this.destroy$.next(); this.destroy$.complete(); }</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <span class="project-arrow">↗</span>
-    </div>
-    <div class="project-card">
-      <div class="project-num">03 / Fintech</div>
-      <div class="project-title">UPI Transaction Monitor</div>
-      <p class="project-desc">Real-time UPI transaction monitoring dashboard with analytics, settlement reconciliation, and reporting across high-volume transaction flows.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Angular Signals</span>
-        <span class="tech-pill">Chart.js</span>
-        <span class="tech-pill">RxJS</span>
-        <span class="tech-pill">SCSS</span>
-      </div>
-      <span class="project-arrow">↗</span>
-    </div>
-    <div class="project-card">
-      <div class="project-num">04 / Architecture</div>
-      <div class="project-title">White-label Multi-bank Platform</div>
-      <p class="project-desc">Configurable white-label Angular architecture supporting multilingual UI and custom theming deployed across multiple banking institutions.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Lazy Modules</span>
-        <span class="tech-pill">i18n</span>
-        <span class="tech-pill">Angular 16</span>
-        <span class="tech-pill">Bootstrap</span>
-      </div>
-      <span class="project-arrow">↗</span>
-    </div>
-    <div class="project-card">
-      <div class="project-num">05 / Optimization</div>
-      <div class="project-title">Terminal Management System</div>
-      <p class="project-desc">TMS module for managing payment terminals at scale — device provisioning, status monitoring, and lifecycle management across merchant networks.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Angular</span>
-        <span class="tech-pill">PrimeNG</span>
-        <span class="tech-pill">REST API</span>
-        <span class="tech-pill">NgRx</span>
-      </div>
-      <span class="project-arrow">↗</span>
-    </div>
-    <div class="project-card">
-      <div class="project-num">06 / Dashboard</div>
-      <div class="project-title">Analytics &amp; Settlement Reports</div>
-      <p class="project-desc">High-performance reporting and analytics module handling large datasets with optimized change detection, virtual scrolling, and Chart.js visualizations.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Chart.js</span>
-        <span class="tech-pill">Leaflet.js</span>
-        <span class="tech-pill">RxJS</span>
-        <span class="tech-pill">Tailwind CSS</span>
-      </div>
-      <span class="project-arrow">↗</span>
     </div>
   </div>
-</section>
 
-<!-- EDUCATION -->
-<section id="education">
-  <div class="section-label">Education</div>
-  <h2>Academic<br>background</h2>
-  <div class="edu-grid">
-    <div class="edu-card">
-      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">2022 — 2024</div>
-      <div class="edu-deg">Master of Computer Applications</div>
-      <div class="edu-uni">Jain University, Bangalore</div>
-      <div class="edu-year">MCA</div>
+  <!-- ═══════════════════ PROJECT IDEA ═══════════════════ -->
+  <div id="page-project" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 1</div>
+        <h1 class="page-title">Project <span>Idea</span></h1>
+        <p class="page-sub">A real-world SaaS that interviewers will respect</p>
+      </div>
     </div>
-    <div class="edu-card">
-      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">2016 — 2019</div>
-      <div class="edu-deg">Bachelor of Computer Applications</div>
-      <div class="edu-uni">Bharath University of Arts and Science</div>
-      <div class="edu-year">BCA</div>
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header"><div class="card-title">⬢ PayFlow — Merchant Payment SaaS</div></div>
+        <div class="card-body">
+          <p style="color:var(--text-muted);font-size:13px;line-height:1.8;font-weight:400;margin-bottom:16px">
+            Build a <strong style="color:var(--text)">Merchant Payment Dashboard SaaS</strong> — a frontend-only Angular 17 app mimicking real fintech platforms like Razorpay or Cashfree. It demonstrates every skill interviewers probe for.
+          </p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="padding:14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent)">
+              <div style="font-size:11px;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:6px">MODULES</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:2">
+                🔐 Auth (login, register, OTP)<br>
+                🏪 Merchant onboarding (multi-step form)<br>
+                📊 Dashboard (KPIs, Chart.js)<br>
+                💳 Transactions (large table, filters)<br>
+                👥 User management (RBAC)<br>
+                📑 Reports (export, date range)
+              </div>
+            </div>
+            <div style="padding:14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent2)">
+              <div style="font-size:11px;color:var(--accent2);font-family:'JetBrains Mono',monospace;margin-bottom:6px">TECH SHOWCASE</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:2">
+                ✓ Lazy-loaded feature modules<br>
+                ✓ NgRx for global state<br>
+                ✓ HTTP Interceptor (token + loader)<br>
+                ✓ Route Guards (canActivate, canLoad)<br>
+                ✓ OnPush + trackBy everywhere<br>
+                ✓ Angular Signals (Angular 16+)
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px;padding:14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent3)">
+            <div style="font-size:11px;color:var(--accent3);font-family:'JetBrains Mono',monospace;margin-bottom:6px">WHY THIS WORKS IN INTERVIEWS</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.9;font-weight:400">
+              Razorpay, PhonePe, Juspay, Paytm, and BrowserStack all build exactly this type of merchant-facing dashboard. You can say "I built something similar to what your core teams work on." It covers every dimension interviewers test: state management, performance, RBAC, API design, and component architecture.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">◎ Why Product Companies Care</div></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:12px">
+          <div style="padding:12px;background:var(--surface2);border-radius:8px">
+            <div style="font-size:12px;font-weight:700;margin-bottom:4px">Scale problems</div>
+            <div style="font-size:11px;color:var(--text-muted)">Product companies handle millions of transactions. They need engineers who think about performance from day one — OnPush, virtual scroll, lazy loading.</div>
+          </div>
+          <div style="padding:12px;background:var(--surface2);border-radius:8px">
+            <div style="font-size:12px;font-weight:700;margin-bottom:4px">Team architecture</div>
+            <div style="font-size:11px;color:var(--text-muted)">Multiple teams work on one codebase. Feature modules with clear boundaries, shared module discipline, and NgRx for predictable state are non-negotiable.</div>
+          </div>
+          <div style="padding:12px;background:var(--surface2);border-radius:8px">
+            <div style="font-size:12px;font-weight:700;margin-bottom:4px">Security matters</div>
+            <div style="font-size:11px;color:var(--text-muted)">Fintech is permission-heavy. RBAC via directives + guards shows you understand real security constraints, not just routing tricks.</div>
+          </div>
+          <div style="padding:12px;background:var(--surface2);border-radius:8px">
+            <div style="font-size:12px;font-weight:700;margin-bottom:4px">Modern Angular (16/17)</div>
+            <div style="font-size:11px;color:var(--text-muted)">Standalone components, Signals, and functional guards show you're current. Most 12–15 LPA openings specifically ask for Angular 15+.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label" style="justify-content:center;">Let's Connect</div>
-  <h2>Ready to build<br>something great?</h2>
-  <p class="contact-subtitle">Open to senior Angular developer roles, fintech opportunities, and interesting frontend challenges. Based in Chennai — open to hybrid and remote.</p>
-  <div class="contact-links">
-    <a href="mailto:ajithsasishankar@gmail.com" class="contact-link">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-      ajithsasishankar@gmail.com
-    </a>
-    <a href="tel:+918838516518" class="contact-link">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6.55 6.55l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      +91 88385 16518
-    </a>
-    <a href="#" class="contact-link">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Chrompet, Chennai
-    </a>
+  <!-- ═══════════════════ ARCHITECTURE ═══════════════════ -->
+  <div id="page-architecture" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 2</div>
+        <h1 class="page-title">Angular <span>Architecture</span></h1>
+        <p class="page-sub">Production folder structure for SaaS fintech apps</p>
+      </div>
+    </div>
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header"><div class="card-title">◈ Folder Structure</div></div>
+        <div class="card-body">
+          <div class="tree">
+            <div class="tree-line"><span class="tree-folder">src/app/</span></div>
+            <div class="tree-indent">
+              <div class="tree-line"><span class="tree-folder">core/</span> <span class="tree-comment">  ← singleton services, guards, interceptors</span></div>
+              <div class="tree-indent">
+                <div class="tree-line"><span class="tree-file">auth/</span> <span class="tree-comment">  auth.service, auth.guard</span></div>
+                <div class="tree-line"><span class="tree-file">interceptors/</span> <span class="tree-comment">  token.interceptor, loader.interceptor</span></div>
+                <div class="tree-line"><span class="tree-file">services/</span> <span class="tree-comment">  api.service, permission.service</span></div>
+                <div class="tree-line"><span class="tree-file">core.module.ts</span></div>
+              </div>
+              <div class="tree-line"><span class="tree-folder">shared/</span> <span class="tree-comment">  ← reusable components, pipes, directives</span></div>
+              <div class="tree-indent">
+                <div class="tree-line"><span class="tree-file">components/</span> <span class="tree-comment">  button, table, modal, spinner</span></div>
+                <div class="tree-line"><span class="tree-file">directives/</span> <span class="tree-comment">  hasPermission.directive</span></div>
+                <div class="tree-line"><span class="tree-file">pipes/</span> <span class="tree-comment">  currency.pipe, date-format.pipe</span></div>
+                <div class="tree-line"><span class="tree-file">shared.module.ts</span></div>
+              </div>
+              <div class="tree-line"><span class="tree-folder">features/</span> <span class="tree-comment">  ← lazy-loaded feature modules</span></div>
+              <div class="tree-indent">
+                <div class="tree-line"><span class="tree-folder">dashboard/</span></div>
+                <div class="tree-line"><span class="tree-folder">merchant/</span></div>
+                <div class="tree-line"><span class="tree-folder">reports/</span></div>
+                <div class="tree-line"><span class="tree-folder">users/</span></div>
+              </div>
+              <div class="tree-line"><span class="tree-folder">store/</span> <span class="tree-comment">  ← NgRx root state</span></div>
+              <div class="tree-indent">
+                <div class="tree-line"><span class="tree-file">auth/</span> <span class="tree-comment">  actions, reducer, effects, selectors</span></div>
+                <div class="tree-line"><span class="tree-file">merchant/</span></div>
+                <div class="tree-line"><span class="tree-file">app.state.ts</span></div>
+              </div>
+              <div class="tree-line"><span class="tree-folder">layout/</span> <span class="tree-comment">  ← shell: header, sidebar, footer</span></div>
+              <div class="tree-line"><span class="tree-file">app.routes.ts</span></div>
+              <div class="tree-line"><span class="tree-file">app.config.ts</span></div>
+              <div class="tree-line"><span class="tree-file">app.component.ts</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">◎ Why This Structure?</div></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+          <div style="padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent)">
+            <div style="font-size:11px;font-weight:700;color:var(--accent)">core/</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Imported ONCE in AppModule. Services here are singletons. Never import CoreModule in feature modules — use forRoot() pattern.</div>
+          </div>
+          <div style="padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent4)">
+            <div style="font-size:11px;font-weight:700;color:var(--accent4)">shared/</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Re-exported from every feature that needs it. Only dumb, reusable components go here — no business logic.</div>
+          </div>
+          <div style="padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent2)">
+            <div style="font-size:11px;font-weight:700;color:var(--accent2)">features/</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Each feature is a lazy-loaded module. Separate bundles = faster initial load. Each has its own routing, components, and local state.</div>
+          </div>
+          <div style="padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent3)">
+            <div style="font-size:11px;font-weight:700;color:var(--accent3)">store/</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px">NgRx slice per feature. Selectors memoize derivations. Effects isolate side effects (HTTP calls) from components.</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
 
-<footer>
-  <p>Ajith Kumar · Senior Angular Developer · Chennai, India · Built with care</p>
-</footer>
+  <!-- ═══════════════════ ROADMAP ═══════════════════ -->
+  <div id="page-roadmap" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 11</div>
+        <h1 class="page-title">30-Day <span>Roadmap</span></h1>
+        <p class="page-sub">Daily plan to crack 12–15 LPA Angular roles</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">◎ Progress Calendar</div></div>
+      <div class="card-body">
+        <div class="calendar-grid" id="calendar"></div>
+      </div>
+    </div>
+    <div style="margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div class="card">
+        <div class="card-header"><div class="card-title" style="color:var(--accent)">Week 1–2 · Build</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:2;font-weight:400">
+          <strong style="color:var(--text)">Day 1–3</strong> · Project setup, routing, shell layout<br>
+          <strong style="color:var(--text)">Day 4–6</strong> · Auth module (login, guard, interceptor)<br>
+          <strong style="color:var(--text)">Day 7–9</strong> · Dashboard + Chart.js integration<br>
+          <strong style="color:var(--text)">Day 10–12</strong> · Merchant feature (forms, table)<br>
+          <strong style="color:var(--text)">Day 13–14</strong> · RBAC (directive + guard)
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title" style="color:var(--accent4)">Week 3 · Deep Dive</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:2;font-weight:400">
+          <strong style="color:var(--text)">Day 15–17</strong> · NgRx (store, actions, effects)<br>
+          <strong style="color:var(--text)">Day 18–19</strong> · RxJS patterns deep dive<br>
+          <strong style="color:var(--text)">Day 20</strong> · Angular Signals + interop<br>
+          <strong style="color:var(--text)">Day 21</strong> · Performance audit (OnPush, trackBy)<br>
+          <strong style="color:var(--text)">Day 22</strong> · Memory leaks fix (takeUntil)
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title" style="color:var(--accent3)">Week 4 · Interview</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:2;font-weight:400">
+          <strong style="color:var(--text)">Day 23–24</strong> · JS core: closures, event loop<br>
+          <strong style="color:var(--text)">Day 25–26</strong> · System design: scalable SaaS<br>
+          <strong style="color:var(--text)">Day 27–28</strong> · All 50 questions (2 rounds)<br>
+          <strong style="color:var(--text)">Day 29</strong> · HR prep + salary negotiation<br>
+          <strong style="color:var(--text)">Day 30</strong> · Full mock interview
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ ANGULAR CONCEPTS ═══════════════════ -->
+  <div id="page-concepts" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 4</div>
+        <h1 class="page-title">Angular <span>Concepts</span></h1>
+        <p class="page-sub">Must-master for senior-level Angular interviews</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'rxjs')">RxJS</div>
+          <div class="tab" onclick="switchTab(this,'ngrx')">NgRx</div>
+          <div class="tab" onclick="switchTab(this,'cd')">Change Detection</div>
+          <div class="tab" onclick="switchTab(this,'signals')">Signals</div>
+          <div class="tab" onclick="switchTab(this,'guards')">Guards & Interceptors</div>
+        </div>
+
+        <div id="tab-rxjs">
+          <div class="qa-list">
+            <div class="qa-item open">
+              <div class="qa-q">switchMap — cancel & switch <span class="qa-chevron">▼</span></div>
+              <div class="qa-a" style="display:block">Cancels the previous inner observable when a new source value arrives. Perfect for search/typeahead where you only want the latest API response.
+                <div class="qa-code">searchTerm$.pipe(
+  debounceTime(300),
+  distinctUntilChanged(),
+  switchMap(term => this.apiService.search(term)) // ← previous request cancelled
+).subscribe(results => this.results = results);</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">mergeMap — parallel execution <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Subscribes to all inner observables simultaneously. Use when order doesn't matter and you want parallel HTTP calls.
+                <div class="qa-code">merchantIds$.pipe(
+  mergeMap(id => this.apiService.getMerchant(id))
+).subscribe(merchant => this.merchants.push(merchant));</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">BehaviorSubject vs Subject <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">BehaviorSubject holds a current value and emits it immediately to new subscribers. Subject emits only future values. Use BehaviorSubject for shared state (user session, permissions).
+                <div class="qa-code">// Service
+private user$ = new BehaviorSubject&lt;User | null&gt;(null);
+currentUser$ = this.user$.asObservable();
+setUser(u: User) { this.user$.next(u); }
+
+// Component — gets current value immediately on subscribe
+this.authService.currentUser$.subscribe(u => this.user = u);</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">debounceTime + distinctUntilChanged for search <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Prevent API hammering. debounceTime waits for user to stop typing. distinctUntilChanged skips identical consecutive values.
+                <div class="qa-code">this.searchControl.valueChanges.pipe(
+  debounceTime(400),         // wait 400ms after last keystroke
+  distinctUntilChanged(),    // only emit if value actually changed
+  switchMap(v => this.api.search(v))
+).subscribe(...);</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-ngrx" style="display:none">
+          <div class="qa-list">
+            <div class="qa-item open">
+              <div class="qa-q">NgRx Data Flow <span class="qa-chevron">▼</span></div>
+              <div class="qa-a" style="display:block">Component → dispatch(Action) → Reducer (pure fn, new state) → Store → Selector → Component. Side effects (HTTP) live in Effects, which dispatch new actions.
+                <div class="qa-code">// Action
+export const loadMerchants = createAction('[Merchant] Load');
+export const loadMerchantsSuccess = createAction('[Merchant] Load Success', props&lt;{merchants: Merchant[]}&gt;());
+
+// Effect
+loadMerchants$ = createEffect(() => this.actions$.pipe(
+  ofType(loadMerchants),
+  switchMap(() => this.api.getMerchants().pipe(
+    map(merchants => loadMerchantsSuccess({ merchants }))
+  ))
+));</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Selectors — memoized derived state <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Selectors compute derived data from store. createSelector memoizes — it only recomputes if input slices change. Combine multiple selectors with createSelector.
+                <div class="qa-code">const selectMerchantState = (state: AppState) => state.merchant;
+const selectAllMerchants = createSelector(selectMerchantState, s => s.merchants);
+const selectActiveMerchants = createSelector(selectAllMerchants, 
+  merchants => merchants.filter(m => m.status === 'active'));</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-cd" style="display:none">
+          <div class="qa-list">
+            <div class="qa-item open">
+              <div class="qa-q">Default vs OnPush Change Detection <span class="qa-chevron">▼</span></div>
+              <div class="qa-a" style="display:block"><strong>Default</strong>: Angular walks the entire component tree and checks every binding on every change (click, timer, HTTP). Expensive in large apps.<br><strong>OnPush</strong>: Angular only checks the component when an @Input reference changes, an internal event fires, or an async pipe emits. Can reduce checks by 10–100x.
+                <div class="qa-code">@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+// IMPORTANT: mutating arrays/objects won't trigger update
+// You must create new references:
+this.merchants = [...this.merchants, newMerchant]; // ✓ new ref
+this.merchants.push(newMerchant); // ✗ same ref, won't update</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-signals" style="display:none">
+          <div class="qa-list">
+            <div class="qa-item open">
+              <div class="qa-q">Angular Signals (16+) — reactive primitives <span class="qa-chevron">▼</span></div>
+              <div class="qa-a" style="display:block">Signals are reactive values that notify consumers when they change. Angular 16+ introduces signal(), computed(), and effect() as a simpler alternative to RxJS for local state.
+                <div class="qa-code">// Component
+count = signal(0);
+doubled = computed(() => this.count() * 2);
+
+increment() { this.count.update(v => v + 1); }
+
+// Template
+// &lt;div&gt;{{ count() }} — {{ doubled() }}&lt;/div&gt;
+
+// Effect (runs when signal changes)
+effect(() => console.log('count is', this.count()));</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Signals vs RxJS — when to use which? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Use <strong>Signals</strong> for local component state, derived values, and simple reactivity. Use <strong>RxJS</strong> for async streams, HTTP calls, event handling, and complex operators (debounce, switchMap). They interop via toSignal() and toObservable().
+                <div class="qa-code">// Convert Observable to Signal
+import { toSignal } from '@angular/core/rxjs-interop';
+merchants = toSignal(this.store.select(selectAllMerchants));</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-guards" style="display:none">
+          <div class="qa-list">
+            <div class="qa-item open">
+              <div class="qa-q">Functional Route Guards (Angular 15+) <span class="qa-chevron">▼</span></div>
+              <div class="qa-a" style="display:block">Class-based guards are deprecated in Angular 15+. Use functional guards with inject().
+                <div class="qa-code">// auth.guard.ts
+export const authGuard: CanActivateFn = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  return auth.isLoggedIn() ? true : router.createUrlTree(['/login']);
+};
+
+// RBAC guard
+export const roleGuard = (role: string): CanActivateFn => () => {
+  const permission = inject(PermissionService);
+  return permission.hasRole(role);
+};</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">HTTP Interceptor — token + loading state <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Intercept every outgoing HTTP request to add auth header and track loading state.
+                <div class="qa-code">export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+  const auth = inject(AuthService);
+  const loader = inject(LoaderService);
+  const token = auth.getToken();
+  loader.show();
+  const authReq = token ? req.clone({ 
+    setHeaders: { Authorization: `Bearer ${token}` }
+  }) : req;
+  return next(authReq).pipe(finalize(() => loader.hide()));
+};</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ JS CORE ═══════════════════ -->
+  <div id="page-js" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 5</div>
+        <h1 class="page-title">JavaScript <span>Core</span></h1>
+        <p class="page-sub">Tricky concepts that separate seniors from juniors</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="qa-list">
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">1. Explain closures with a real example <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">A closure is a function that remembers variables from its outer scope even after the outer function has returned. Angular services use closures implicitly through captured dependencies.
+              <div class="qa-code">function makeCounter() {
+  let count = 0; // captured in closure
+  return {
+    increment: () => ++count,
+    get: () => count
+  };
+}
+const c = makeCounter();
+c.increment(); c.increment();
+c.get(); // 2 — count is still accessible</div>
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">2. Event Loop — microtasks vs macrotasks <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">JS is single-threaded. The event loop checks the call stack, then drains the microtask queue (Promises, queueMicrotask), then picks one macrotask (setTimeout, setInterval, I/O). Microtasks always run before the next macrotask.
+              <div class="qa-code">console.log('1'); // sync
+setTimeout(() => console.log('4'), 0); // macrotask
+Promise.resolve().then(() => console.log('3')); // microtask
+console.log('2'); // sync
+// Output: 1, 2, 3, 4</div>
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">3. Hoisting — var vs let/const <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">var declarations are hoisted and initialized as undefined. let/const are hoisted but NOT initialized — accessing them before declaration throws ReferenceError (Temporal Dead Zone).
+              <div class="qa-code">console.log(x); // undefined (hoisted)
+var x = 5;
+
+console.log(y); // ReferenceError: TDZ
+let y = 10;</div>
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">4. Promises vs Observables <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">Promises: single value, eager (execute immediately), not cancellable. Observables: multiple values over time, lazy (execute on subscribe), cancellable (unsubscribe), composable with operators. Angular's HttpClient returns Observables.
+              <div class="qa-code">// Promise — fires immediately, one value
+const p = fetch('/api/data'); // already running!
+
+// Observable — lazy, multiple values, cancellable
+const obs$ = this.http.get('/api/data'); // NOT running yet
+const sub = obs$.subscribe(...); // now it runs
+sub.unsubscribe(); // cancel!</div>
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">5. call, apply, bind — this context <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">All three explicitly set the `this` context. call/apply invoke immediately (apply takes args as array). bind returns a new function with fixed `this`.
+              <div class="qa-code">function greet(greeting) { return `${greeting}, ${this.name}`; }
+const user = { name: 'Arjun' };
+
+greet.call(user, 'Hello');       // Hello, Arjun
+greet.apply(user, ['Hi']);       // Hi, Arjun
+const boundGreet = greet.bind(user);
+boundGreet('Hey');               // Hey, Arjun</div>
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">6. async/await vs Promises <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">async/await is syntactic sugar over Promises. It makes async code look synchronous and is easier to read, especially with error handling. But avoid async/await in Angular templates — use async pipe with Observables instead.
+              <div class="qa-code">// Promise chain
+fetchUser().then(u => fetchOrders(u.id)).then(o => render(o));
+
+// async/await (cleaner)
+async function loadData() {
+  const user = await fetchUser();
+  const orders = await fetchOrders(user.id);
+  render(orders);
+}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ PERFORMANCE ═══════════════════ -->
+  <div id="page-perf" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 6</div>
+        <h1 class="page-title">Performance <span>Optimization</span></h1>
+        <p class="page-sub">What separates mid-level from senior Angular engineers</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div class="card-header"><div class="card-title" style="color:var(--accent)">◉ Change Detection</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:1.8">
+          <strong style="color:var(--text)">OnPush everywhere</strong> — set ChangeDetectionStrategy.OnPush on every component. Angular skips components whose inputs haven't changed (by reference).<br><br>
+          <strong style="color:var(--text)">async pipe</strong> — use <code style="color:var(--accent3)">{{ data$ | async }}</code> in templates instead of manual subscribe/unsubscribe. Auto-unsubscribes on destroy.<br><br>
+          <strong style="color:var(--text)">markForCheck()</strong> — call when you mutate state outside Angular's zone (3rd party libs, WebSockets).
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title" style="color:var(--accent3)">◉ Large Data Tables</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:1.8">
+          <strong style="color:var(--text)">trackBy</strong> — tell Angular how to track list items. Without it, Angular re-renders every row on any change.
+          <div class="qa-code" style="margin-top:8px">// template
+*ngFor="let m of merchants; trackBy: trackById"
+
+// component
+trackById(index: number, item: Merchant) {
+  return item.id; // stable identity
+}</div>
+          <strong style="color:var(--text)">Virtual Scrolling</strong> — CDK ScrollingModule for 10k+ rows. Renders only visible rows.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title" style="color:var(--accent4)">◉ Memory Leaks</div></div>
+        <div class="card-body">
+          <div class="qa-code">// Pattern 1: takeUntil (classic)
+private destroy$ = new Subject&lt;void&gt;();
+
+ngOnInit() {
+  this.data$.pipe(
+    takeUntil(this.destroy$)
+  ).subscribe();
+}
+ngOnDestroy() {
+  this.destroy$.next();
+  this.destroy$.complete();
+}
+
+// Pattern 2: Angular 16+ (cleaner)
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+this.data$.pipe(takeUntilDestroyed()).subscribe();</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title" style="color:var(--accent2)">◉ Bundle Size</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:1.8">
+          <strong style="color:var(--text)">Lazy loading</strong> — every feature module should be lazy. Use <code style="color:var(--accent3)">loadChildren</code> in routes.<br><br>
+          <strong style="color:var(--text)">Preloading strategy</strong> — use PreloadAllModules or custom strategy to preload on idle.<br><br>
+          <strong style="color:var(--text)">Tree shaking</strong> — import only what you need. Avoid barrel imports that pull in entire libraries.
+          <div class="qa-code" style="margin-top:8px">{ path: 'merchant', loadChildren: () =>
+  import('./features/merchant/merchant.routes')
+  .then(m => m.MERCHANT_ROUTES) }</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ QUESTIONS ═══════════════════ -->
+  <div id="page-questions" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 7</div>
+        <h1 class="page-title">Top 50 <span>Questions</span></h1>
+        <p class="page-sub">Angular (30) + JavaScript (20) with interview-style answers</p>
+      </div>
+    </div>
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="chip chip-angular">Angular</span> 30 Questions</div></div>
+        <div class="card-body">
+          <div class="qa-list">
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Q1. What is the difference between module-based and standalone Angular? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">In module-based Angular, components must be declared in an NgModule. Standalone components (Angular 14+) use standalone: true and import dependencies directly. Angular 17 makes standalone the default. Standalone components simplify lazy loading and remove unnecessary NgModule boilerplate.</div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Q2. What is ViewEncapsulation and its types? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Controls how CSS is scoped to a component. <strong>Emulated</strong> (default): adds unique attributes to CSS selectors, scoped to component. <strong>None</strong>: no encapsulation, styles are global. <strong>ShadowDom</strong>: uses native Shadow DOM for true isolation. Use None carefully as it pollutes global styles.
+                <div class="qa-code">@Component({ encapsulation: ViewEncapsulation.OnPush })</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Q3. Smart vs Dumb component pattern — explain and when to use? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a"><strong>Smart (Container)</strong>: knows about the store/service, fetches data, dispatches actions. <strong>Dumb (Presentational)</strong>: receives data via @Input, emits events via @Output, no service injection. This separation enables reusability, easier testing, and allows OnPush on dumb components without worry.</div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Q4. What is Zone.js and why might you go zone-less? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Zone.js patches async APIs (setTimeout, fetch, addEventListener) to notify Angular when to run change detection. Going zone-less (Angular 17+) improves performance: no monkey-patching, no unnecessary CD cycles. With Signals, you can opt out of zones entirely using provideExperimentalZonelessChangeDetection().</div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Q5. How do you share data between sibling components? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">3 approaches: (1) <strong>Parent via @Input/@Output</strong>: parent mediates. (2) <strong>Shared Service with BehaviorSubject</strong>: both components subscribe. (3) <strong>NgRx Store</strong>: dispatch action in one, select in other. For complex apps with many siblings, NgRx is the clean solution.</div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">Q6. What is content projection and ng-content? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Allows parent templates to inject HTML into a child component's template. Used heavily in shared UI components (modal, card, tabs). Multi-slot projection with select attribute allows multiple injection points.
+                <div class="qa-code">&lt;!-- card.component.html --&gt;
+&lt;div class="card"&gt;
+  &lt;ng-content select="[card-header]"&gt;&lt;/ng-content&gt;
+  &lt;ng-content select="[card-body]"&gt;&lt;/ng-content&gt;
+&lt;/div&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="chip chip-rxjs">JavaScript</span> Top Questions</div></div>
+        <div class="card-body">
+          <div class="qa-list">
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">JS-1. Explain prototype chain <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Every JS object has a hidden __proto__ link to its prototype. When you access a property, JS looks up the chain until it finds it or reaches null. Classes are syntax sugar over prototypes.
+                <div class="qa-code">function Animal(name) { this.name = name; }
+Animal.prototype.speak = function() { return this.name; };
+const dog = new Animal('Rex');
+dog.speak(); // 'Rex' — found on prototype</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">JS-2. What is the difference between == and ===? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">== performs type coercion before comparison. === checks value AND type (strict equality). Always use === in production code. Common trap: 0 == false is true, but 0 === false is false.</div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">JS-3. What is debouncing vs throttling? <span class="qa-chevron">▼</span></div>
+              <div class="qa-a"><strong>Debounce</strong>: execute only after N ms of silence — search input. <strong>Throttle</strong>: execute at most once every N ms — scroll/resize. In Angular, use RxJS debounceTime/throttleTime instead of lodash helpers.
+                <div class="qa-code">// Angular way
+this.searchInput.valueChanges.pipe(
+  debounceTime(300)  // wait for 300ms silence
+).subscribe(v => this.search(v));</div>
+              </div>
+            </div>
+            <div class="qa-item" onclick="toggleQA(this)">
+              <div class="qa-q">JS-4. Explain Promise.all vs Promise.allSettled <span class="qa-chevron">▼</span></div>
+              <div class="qa-a">Promise.all: rejects immediately if any promise rejects (fail-fast). Promise.allSettled: waits for all to complete/reject and returns an array of results — better for independent parallel calls.
+                <div class="qa-code">// Dashboard: load all data in parallel, don't fail-fast
+const [merchants, txns] = await Promise.all([
+  this.api.getMerchants(),
+  this.api.getTransactions()
+]);</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ MOCK INTERVIEW ═══════════════════ -->
+  <div id="page-mock" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 10</div>
+        <h1 class="page-title">Mock <span>Interview</span></h1>
+        <p class="page-sub">Simulate a real product-company Angular technical interview</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">▷ Interview Session — Senior Angular Developer</div>
+        <button class="btn btn-ghost" style="padding:6px 12px;font-size:11px" onclick="resetInterview()">↺ Reset</button>
+      </div>
+      <div class="card-body">
+        <div class="interview-chat" id="chat"></div>
+        <div class="chat-input-row">
+          <input class="chat-input" id="chatInput" placeholder="Type your answer..." onkeydown="if(event.key==='Enter')sendAnswer()">
+          <button class="btn btn-primary" onclick="sendAnswer()">Send ↵</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ HR PREP ═══════════════════ -->
+  <div id="page-hr" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 8</div>
+        <h1 class="page-title">HR <span>Preparation</span></h1>
+        <p class="page-sub">Human, confident, natural answers — no corporate jargon</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="qa-list">
+          <div class="qa-item open">
+            <div class="qa-q">Tell me about yourself <span class="qa-chevron">▼</span></div>
+            <div class="qa-a" style="display:block">
+              "I'm a Frontend Developer with 4+ years of experience, primarily in Angular — versions 16 and 17. Most of my work has been in fintech SaaS: I've built merchant onboarding flows, payment dashboards, RBAC systems, and large data tables handling thousands of records. I enjoy solving performance problems — OnPush change detection, virtual scrolling, and memory leak prevention are things I actively think about. I'm now looking for a product-company environment where I can work on complex, user-facing problems at scale. That's exactly what drew me to this role."
+            </div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">Why should we hire you? <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">"I bring direct fintech experience — I've worked on merchant payment platforms, which is very close to what you build. I know what it means to handle real-time transaction data in the UI, RBAC at scale, and how to keep an Angular app fast when your data grows. I'm also up to date with Angular 17 — standalone components, Signals, functional guards. I'm not just using Angular, I think about it architecturally."</div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">Why are you leaving your current job? <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">"My current role has given me solid experience in building real fintech systems, and I'm grateful for that. But I feel ready for a bigger challenge — a product company where the focus is on deep engineering, scale, and impact. Service companies can sometimes limit how far you go technically. I want to be in an environment where I'm working on the product long-term, not just delivering to a client."</div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">What is your salary expectation? (targeting 12 LPA) <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">"Based on my 4+ years of experience in Angular and fintech, and the current market for senior Angular developers, I'm looking at 12–15 LPA. That said, I'm flexible and I value the overall opportunity — if the role, team, and growth potential are strong, I'm open to a conversation."<br><br><strong style="color:var(--accent3)">Tip:</strong> Never give a single number first. Give a range. Never go below your expectation to sound flexible — it signals low confidence.</div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">What are your strengths? <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">"My biggest strength is architectural thinking — I don't just make things work, I make them scalable. When I build a feature, I think about how it'll look with 10x the data, 5 other developers touching the code, and new permissions being added. I've also become strong at debugging RxJS subscription chains and NgRx effects — things that trip up most developers."</div>
+          </div>
+          <div class="qa-item" onclick="toggleQA(this)">
+            <div class="qa-q">What is your weakness? <span class="qa-chevron">▼</span></div>
+            <div class="qa-a">"I can sometimes go deep on a performance optimization when a good-enough solution would have shipped faster. I've learned to recognize when 'perfect' is the enemy of 'done', and I've gotten better at making that call. I use benchmarks now to justify spending extra time on perf — if the numbers don't show a meaningful improvement, I move on."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SYSTEM DESIGN ═══════════════════ -->
+  <div id="page-system" class="page-section">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">// Section 9</div>
+        <h1 class="page-title">System <span>Design</span></h1>
+        <p class="page-sub">Frontend-focused — scalable SaaS Angular architecture</p>
+      </div>
+    </div>
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header"><div class="card-title">⊞ How to Design a Scalable Angular Dashboard</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:1.9;font-weight:400">
+          <strong style="color:var(--text);font-size:13px">1. Shell + Feature module split</strong><br>
+          One AppShell component (sidebar, header) — stays loaded. Feature modules (dashboard, reports, users) lazy-loaded on demand. Each module owns its routes, state slice, and components.<br><br>
+          <strong style="color:var(--text);font-size:13px">2. State management layers</strong><br>
+          <strong style="color:var(--accent)">NgRx</strong> for global/shared state (auth user, permissions, notifications). <strong style="color:var(--accent4)">Local signals/BehaviorSubject</strong> for component-local state (form values, UI toggles). Don't put everything in NgRx — that's an anti-pattern.<br><br>
+          <strong style="color:var(--text);font-size:13px">3. API communication layer</strong><br>
+          One ApiService per feature (not one giant ApiService). HTTP Interceptor handles tokens, loading states, error toasts globally. Use HttpContext to opt out of interceptors for public routes.<br><br>
+          <strong style="color:var(--text);font-size:13px">4. RBAC architecture</strong><br>
+          Store user permissions in NgRx. hasPermission directive controls element visibility. canActivate guard controls route access. Permission checks are synchronous — load permissions on login, cache in store.<br><br>
+          <strong style="color:var(--text);font-size:13px">5. Large data handling</strong><br>
+          Virtual scrolling (CDK) for 1000+ rows. Server-side pagination — never fetch all records. Debounced search with switchMap. Export large datasets via streaming (backend responsibility), show progress indicator in UI.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">◈ Angular + Microservices</div></div>
+        <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:1.9;font-weight:400">
+          <strong style="color:var(--text)">API Gateway pattern</strong><br>
+          Angular talks to ONE base URL. Backend gateway routes to merchant-service, payment-service, auth-service. Angular doesn't need to know about internal microservice boundaries.<br><br>
+          <strong style="color:var(--text)">BFF (Backend For Frontend)</strong><br>
+          A BFF layer aggregates multiple microservice calls into one UI-optimized response. Reduces over-fetching and multiple round trips from Angular.<br><br>
+          <strong style="color:var(--text)">Real-time data (WebSockets)</strong><br>
+          Use RxJS webSocket() operator. Connect once in a service, multicast with share() operator. NgZone.run() needed to trigger change detection from WS events if using zones.<br><br>
+          <strong style="color:var(--text)">Error boundaries</strong><br>
+          Global ErrorHandler class for uncaught errors. HTTP error interceptor for API failures. Feature-level error states in NgRx (loaded, loading, error).
+          <div class="qa-code" style="margin-top:12px">// Feature state shape
+interface MerchantState {
+  merchants: Merchant[];
+  status: 'idle' | 'loading' | 'success' | 'error';
+  error: string | null;
+}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
-  function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); }
-  animRing();
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='50px'; ring.style.height='50px'; });
-    el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
-  });
+// NAV
+function showPage(id) {
+  document.querySelectorAll('.page-section').forEach(p => p.classList.remove('visible'));
+  document.getElementById('page-' + id).classList.add('visible');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.target.closest('.nav-item').classList.add('active');
+  window.scrollTo(0, 0);
+}
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.exp-item').forEach(el => observer.observe(el));
+// Q&A TOGGLE
+function toggleQA(el) {
+  el.classList.toggle('open');
+}
+
+// TABS
+function switchTab(tabEl, tabId) {
+  const tabs = ['rxjs','ngrx','cd','signals','guards'];
+  tabs.forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if(el) el.style.display = t === tabId ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+}
+
+// CALENDAR
+const calendarData = {
+  done: [1,2,3,4,5,6,7,8,9],
+  active: [10],
+};
+function buildCalendar() {
+  const grid = document.getElementById('calendar');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const topics = [
+    'Setup','Routing','Auth UI','Guard','Interceptor','Shell',
+    'Dashboard','Chart.js','Merchant','Table','Filter','RBAC',
+    'Directive','Guard RBAC','NgRx basics','Actions','Reducers','Effects',
+    'Selectors','RxJS deep','Signals','OnPush','trackBy','takeUntil',
+    'Bundle','Lazy load','JS closures','JS async','System design','Mock Interview'
+  ];
+  for(let d = 1; d <= 30; d++) {
+    const div = document.createElement('div');
+    div.className = 'day-cell ' + 
+      (calendarData.done.includes(d) ? 'done' : calendarData.active.includes(d) ? 'active' : 'todo');
+    div.textContent = d;
+    div.title = `Day ${d}: ${topics[d-1]}`;
+    grid.appendChild(div);
+  }
+}
+buildCalendar();
+
+// MOCK INTERVIEW
+const questions = [
+  "Tell me about your experience with Angular. What's the most complex component or system you've built?",
+  "How does OnPush change detection work, and when would you use it?",
+  "Walk me through how you'd implement a search with debouncing and API integration in Angular.",
+  "What is NgRx and why would you use it instead of a simple service with BehaviorSubject?",
+  "You have a table with 50,000 rows. How do you handle performance in the UI?",
+  "How do you prevent memory leaks in Angular components?",
+  "Explain what Angular Signals are and how they differ from RxJS Observables.",
+  "How would you design RBAC (Role-Based Access Control) in an Angular SaaS app?",
+];
+let qIdx = 0;
+let waiting = true;
+
+function addBubble(msg, type, name) {
+  const chat = document.getElementById('chat');
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `<div class="chat-name">${name}</div><div class="chat-bubble ${type}">${msg}</div>`;
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function nextQuestion() {
+  if (qIdx < questions.length) {
+    addBubble(questions[qIdx], 'interviewer', '👤 Interviewer');
+    qIdx++;
+    waiting = true;
+  } else {
+    addBubble("Great session! You've answered all questions. Review your answers and work on any areas that felt weak.", 'interviewer', '👤 Interviewer');
+  }
+}
+
+function sendAnswer() {
+  const input = document.getElementById('chatInput');
+  const val = input.value.trim();
+  if (!val) return;
+  addBubble(val, 'user', '🧑‍💻 You');
+  input.value = '';
+  waiting = false;
+  setTimeout(() => {
+    const feedbacks = [
+      "Good answer. Make sure you mention the specific scenarios where OnPush matters — like large lists with immutable data.",
+      "Solid. One tip: always mention the practical impact in your answer, not just the theory.",
+      "That's a good explanation. For bonus points, mention debounceTime + distinctUntilChanged + switchMap combo.",
+      "Good start. Also mention when NOT to use NgRx — small apps, isolated state, simple forms.",
+      "Excellent mention of virtual scrolling. Don't forget server-side pagination and trackBy.",
+      "Good. The Angular 16+ takeUntilDestroyed() shortcut is worth mentioning.",
+      "Strong answer. Connect Signals to zone-less Angular for extra senior-level points.",
+      "Great coverage. Mention storing permissions in NgRx so checks are synchronous.",
+    ];
+    const feedback = feedbacks[qIdx - 1] || "Good answer. Let's continue.";
+    addBubble(`💡 ${feedback}`, 'interviewer', '👤 Interviewer');
+    setTimeout(nextQuestion, 1200);
+  }, 800);
+}
+
+function resetInterview() {
+  qIdx = 0;
+  document.getElementById('chat').innerHTML = '';
+  nextQuestion();
+}
+
+// Auto-start interview
+setTimeout(() => {
+  const chatPage = document.getElementById('page-mock');
+  if (chatPage) {
+    addBubble("Welcome! I'm going to simulate a real Angular senior developer interview for a 12–15 LPA product company role. Take your time. There are no trick questions — I want to understand how you think. Ready?", 'interviewer', '👤 Interviewer');
+    setTimeout(nextQuestion, 1500);
+  }
+}, 100);
 </script>
 </body>
 </html>
